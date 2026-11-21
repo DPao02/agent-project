@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "embedding_model": "text-embedding-v4",
+  "embedding_dimensions": 1024,
+  "chunk_settings": {
+    "chunk_size": 512,
+    "chunk_overlap": 128,
+    "separators": [
+      "\n\n",
+      "\n",
+      "。",
+      "！",
+      "？",
+      "；",
+      " ",
+      ""
+    ]
+  },
+  "document_count": 18,
+  "corpus_sha256": "6028adcb67131e396739a7ca0f2916ad6952b8c2e4e48a5a4ca11742ae311c23",
+  "terms_sha256": "87681aa309caf5c047858ef1160b41f3791279ee5a7dc7e42a9ab332e86d4243",
+  "files": {
+    "refund_policy.pdf": "e28ae11f2dbf2d271362f4a26bcdd19e447ae5b04c1a5b9e1ecb70e18ea7f78c",
+    "shipping_policy.pdf": "cfb4644ecab5e6613d719a9409c9e7312d40074ac7e05fba00ede7556d3302c9"
+  },
+  "queries": 100,
+  "answerable": 90,
+  "annotation_status": "assistant_authored_draft_not_human_verified",
+  "split_strategy": "80 dev / 20 test; disjoint intent groups; 90 answerable + 10 unanswerable"
+}

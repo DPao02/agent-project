@@ -1,0 +1,10 @@
+{
+  "quality_report": "results\\quality_20261115T031304Z\\report.json",
+  "per_query": "results\\quality_20261115T031304Z\\per_query.jsonl",
+  "error_analysis": "results\\quality_20261115T031304Z\\error_analysis.jsonl",
+  "review_pools": "results\\quality_20261115T031304Z\\review_pools.jsonl",
+  "latency_report": "results\\latency_20261115T030435Z\\report.json",
+  "latency_samples": "results\\latency_20261115T030435Z\\samples.jsonl",
+  "annotation_review": "annotation_review.csv",
+  "results_summary": "results_summary.csv"
+}

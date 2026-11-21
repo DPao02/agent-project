@@ -1,0 +1,105 @@
+# Local credentials; keep configuration templates in version control.
+.env
+.env.*
+*.env
+*.env.local
+!.env.example
+!.env.sample
+!.env.template
+*.key
+*.pem
+*.p12
+*.pfx
+
+# Python environments, downloaded tools and dependency caches.
+.venv/
+venv/
+env/
+.tools/
+.uv-cache/
+.cache/
+__pycache__/
+*.py[cod]
+*.pyd
+*.egg-info/
+.eggs/
+build/
+dist/
+*.whl
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+
+# Notebook checkpoints and local LangGraph state.
+.ipynb_checkpoints/
+# Saved outputs contain API credentials; remove this rule after clearing them.
+/notebook/1openai.ipynb
+.langgraph_api/
+*.pckl
+*.pickle
+
+# Runtime databases, vector indexes and service data.
+*.db
+*.db-wal
+*.db-shm
+*.db-journal
+*.sqlite
+*.sqlite-*
+*.sqlite3
+*.sqlite3-*
+*.rdb
+*.aof
+*.faiss
+vector_store/
+volumes/
+/项目/meeting_assistant/data/
+# Keep the public sample database used by the learning notebooks.
+!/notebook/resources/Chinook.db
+
+# Recordings and model weights are local runtime resources.
+*.mp3
+*.wav
+*.m4a
+*.flac
+*.ogg
+*.aac
+*.wma
+*.mp4
+*.audio
+*.pt
+*.pth
+*.onnx
+*.safetensors
+*.ckpt
+
+# Generated reports, upload files and temporary exports.
+/tmp/
+/output/
+/notebook/resources/output/
+/fastapi-learning/upimg/*
+!/fastapi-learning/upimg/.gitkeep
+*.log
+logs/
+*.tmp
+*.bak
+
+# Frontend dependencies and build caches.
+node_modules/
+.next/
+*.tsbuildinfo
+
+# Local editor, operating system and Docker overrides.
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+Desktop.ini
+docker-compose.override.yml

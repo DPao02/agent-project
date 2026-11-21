@@ -1,0 +1,779 @@
+{
+  "label_status": "PROVISIONAL_NOT_HUMAN_VERIFIED",
+  "human_reviewed_queries": 0,
+  "evaluated_queries": 100,
+  "dataset_sha256": "0385d135b391a55871b5c28d904bbab481bdf319467e5c83e9492f9bbf492cc2",
+  "manifest": {
+    "schema_version": 1,
+    "embedding_model": "text-embedding-v4",
+    "embedding_dimensions": 1024,
+    "chunk_settings": {
+      "chunk_size": 512,
+      "chunk_overlap": 128,
+      "separators": [
+        "\n\n",
+        "\n",
+        "。",
+        "！",
+        "？",
+        "；",
+        " ",
+        ""
+      ]
+    },
+    "document_count": 18,
+    "corpus_sha256": "6028adcb67131e396739a7ca0f2916ad6952b8c2e4e48a5a4ca11742ae311c23",
+    "terms_sha256": "87681aa309caf5c047858ef1160b41f3791279ee5a7dc7e42a9ab332e86d4243",
+    "files": {
+      "refund_policy.pdf": "e28ae11f2dbf2d271362f4a26bcdd19e447ae5b04c1a5b9e1ecb70e18ea7f78c",
+      "shipping_policy.pdf": "cfb4644ecab5e6613d719a9409c9e7312d40074ac7e05fba00ede7556d3302c9"
+    },
+    "queries": 100,
+    "answerable": 90,
+    "annotation_status": "assistant_authored_draft_not_human_verified",
+    "split_strategy": "80 dev / 20 test; disjoint intent groups; 90 answerable + 10 unanswerable"
+  },
+  "collection": "smart_cs_kb_v4_1024_v1",
+  "embedding_model": "text-embedding-v4",
+  "rerank_model": "qwen3-rerank",
+  "rewrite_model": "deepseek-flash",
+  "code_sha256": {
+    "rag\\retrieval.py": "388bf2025b409753d7d3a96017bc7a4e4be27c82fcb2f832dadb6a3b600cdc56",
+    "rag\\providers.py": "3cf159290616d59103f2c15a3a3fffed4e0a29f54b272975ae727ea02cc40ae6",
+    "rag_eval\\engine.py": "b53cc2a127caf6a189d7a4c41d6f4e9dbe652060817ba4ea38779bb5385fbf37",
+    "rag_eval\\metrics.py": "e666f0838fe2555b560201846cab1171f69ccf6b8b37e1e21ae21becbb4e8381",
+    "rag_eval\\budget.py": "0c0c0e9f792b6f3662ffa3dcae8d6feb7099d18cb521242085d026337bdd7236",
+    "agents\\knowledge_rag.py": "847c71ed67857ff511c79b47dab28b322dbfcff766746b9c27b43f3d6df71ceb"
+  },
+  "metric_definition": "Macro document Recall@5; first relevant rank MRR@10; Hit@5 separately. Empty qrels excluded, not scored as zero.",
+  "unanswerable_scope": "10条无答案样本不参与Recall/MRR；本实验不验证生成答案或拒答准确率",
+  "candidate_ablation_feasible": false,
+  "request_budget": {
+    "limit": 1200,
+    "attempted_calls": 885,
+    "by_provider": {
+      "dashscope_embedding": 264,
+      "deepseek_current_rerank": 100,
+      "deepseek_rewrite": 148,
+      "dashscope_rerank": 373
+    }
+  },
+  "configurations": [
+    {
+      "name": "bm25",
+      "retriever": "bm25",
+      "candidates": 50,
+      "rerank": false,
+      "dictionary": false,
+      "rewrite": false,
+      "rerank_provider": "dashscope",
+      "output_k": 10
+    },
+    {
+      "name": "vector",
+      "retriever": "vector",
+      "candidates": 50,
+      "rerank": false,
+      "dictionary": false,
+      "rewrite": false,
+      "rerank_provider": "dashscope",
+      "output_k": 10
+    },
+    {
+      "name": "current_online",
+      "retriever": "vector",
+      "candidates": 5,
+      "rerank": true,
+      "dictionary": false,
+      "rewrite": true,
+      "rerank_provider": "llm",
+      "output_k": 3
+    },
+    {
+      "name": "hybrid_rrf",
+      "retriever": "hybrid",
+      "candidates": 50,
+      "rerank": false,
+      "dictionary": false,
+      "rewrite": false,
+      "rerank_provider": "dashscope",
+      "output_k": 10
+    },
+    {
+      "name": "hybrid_rerank_50",
+      "retriever": "hybrid",
+      "candidates": 50,
+      "rerank": true,
+      "dictionary": false,
+      "rewrite": false,
+      "rerank_provider": "dashscope",
+      "output_k": 10
+    },
+    {
+      "name": "hybrid_rerank_50_dict",
+      "retriever": "hybrid",
+      "candidates": 50,
+      "rerank": true,
+      "dictionary": true,
+      "rewrite": false,
+      "rerank_provider": "dashscope",
+      "output_k": 10
+    },
+    {
+      "name": "hybrid_rerank_50_rewrite",
+      "retriever": "hybrid",
+      "candidates": 50,
+      "rerank": true,
+      "dictionary": false,
+      "rewrite": true,
+      "rerank_provider": "dashscope",
+      "output_k": 10
+    },
+    {
+      "name": "hybrid_rerank_50_dict_rewrite",
+      "retriever": "hybrid",
+      "candidates": 50,
+      "rerank": true,
+      "dictionary": true,
+      "rewrite": true,
+      "rerank_provider": "dashscope",
+      "output_k": 10
+    },
+    {
+      "name": "hybrid_rerank_20_dict_rewrite",
+      "retriever": "hybrid",
+      "candidates": 20,
+      "rerank": true,
+      "dictionary": true,
+      "rewrite": true,
+      "rerank_provider": "dashscope",
+      "output_k": 10
+    }
+  ],
+  "quality_run_uses_cache": true,
+  "p95_from_quality_run": null,
+  "warning": "不得将质量缓存命中的耗时当作线上延迟；18块语料时Top50和Top20不是两个不同实验",
+  "summaries": [
+    {
+      "configuration": "bm25",
+      "split": "all",
+      "queries": 100,
+      "answerable_queries": 90,
+      "unanswerable_queries": 10,
+      "errors": 0,
+      "recall5": 0.9444444444444444,
+      "mrr10": 0.8028835978835978,
+      "hit5": 0.9888888888888889,
+      "recall5_ci95": [
+        0.9037037037037038,
+        0.9759722222222224
+      ],
+      "mrr10_ci95": [
+        0.7433458994708995,
+        0.8657433862433863
+      ],
+      "candidate_counts": [
+        6,
+        7,
+        8,
+        9,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18
+      ]
+    },
+    {
+      "configuration": "bm25",
+      "split": "dev",
+      "queries": 80,
+      "answerable_queries": 72,
+      "unanswerable_queries": 8,
+      "errors": 0,
+      "recall5": 0.9444444444444444,
+      "mrr10": 0.7848544973544974,
+      "hit5": 0.9861111111111112,
+      "recall5_ci95": [
+        0.9027777777777778,
+        0.9814814814814814
+      ],
+      "mrr10_ci95": [
+        0.7113731812169313,
+        0.8597280092592592
+      ],
+      "candidate_counts": [
+        6,
+        7,
+        8,
+        9,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18
+      ]
+    },
+    {
+      "configuration": "bm25",
+      "split": "test",
+      "queries": 20,
+      "answerable_queries": 18,
+      "unanswerable_queries": 2,
+      "errors": 0,
+      "recall5": 0.9444444444444444,
+      "mrr10": 0.875,
+      "hit5": 1.0,
+      "recall5_ci95": [
+        0.8703703703703703,
+        1.0
+      ],
+      "mrr10_ci95": [
+        0.7777777777777778,
+        0.9722222222222222
+      ],
+      "candidate_counts": [
+        9,
+        11,
+        12,
+        13,
+        16,
+        17,
+        18
+      ]
+    },
+    {
+      "configuration": "vector",
+      "split": "all",
+      "queries": 100,
+      "answerable_queries": 90,
+      "unanswerable_queries": 10,
+      "errors": 0,
+      "recall5": 0.9240740740740739,
+      "mrr10": 0.7728086419753086,
+      "hit5": 0.9555555555555556,
+      "recall5_ci95": [
+        0.8740740740740741,
+        0.9722222222222222
+      ],
+      "mrr10_ci95": [
+        0.6862739197530866,
+        0.8571111111111112
+      ],
+      "candidate_counts": [
+        18
+      ]
+    },
+    {
+      "configuration": "vector",
+      "split": "dev",
+      "queries": 80,
+      "answerable_queries": 72,
+      "unanswerable_queries": 8,
+      "errors": 0,
+      "recall5": 0.9236111111111112,
+      "mrr10": 0.764158950617284,
+      "hit5": 0.9444444444444444,
+      "recall5_ci95": [
+        0.8680555555555556,
+        0.9722222222222222
+      ],
+      "mrr10_ci95": [
+        0.6779668209876545,
+        0.851652199074074
+      ],
+      "candidate_counts": [
+        18
+      ]
+    },
+    {
+      "configuration": "vector",
+      "split": "test",
+      "queries": 20,
+      "answerable_queries": 18,
+      "unanswerable_queries": 2,
+      "errors": 0,
+      "recall5": 0.9259259259259258,
+      "mrr10": 0.8074074074074074,
+      "hit5": 1.0,
+      "recall5_ci95": [
+        0.7777777777777777,
+        1.0
+      ],
+      "mrr10_ci95": [
+        0.5842592592592593,
+        1.0
+      ],
+      "candidate_counts": [
+        18
+      ]
+    },
+    {
+      "configuration": "current_online",
+      "split": "all",
+      "queries": 100,
+      "answerable_queries": 90,
+      "unanswerable_queries": 10,
+      "errors": 0,
+      "recall5": 0.7481481481481481,
+      "mrr10": 0.8037037037037038,
+      "hit5": 0.8444444444444444,
+      "recall5_ci95": [
+        0.6537037037037037,
+        0.8351851851851853
+      ],
+      "mrr10_ci95": [
+        0.7037037037037036,
+        0.894537037037037
+      ],
+      "candidate_counts": [
+        5
+      ]
+    },
+    {
+      "configuration": "current_online",
+      "split": "dev",
+      "queries": 80,
+      "answerable_queries": 72,
+      "unanswerable_queries": 8,
+      "errors": 0,
+      "recall5": 0.7453703703703703,
+      "mrr10": 0.7962962962962963,
+      "hit5": 0.8472222222222222,
+      "recall5_ci95": [
+        0.638888888888889,
+        0.8425925925925927
+      ],
+      "mrr10_ci95": [
+        0.6874421296296296,
+        0.9027777777777778
+      ],
+      "candidate_counts": [
+        5
+      ]
+    },
+    {
+      "configuration": "current_online",
+      "split": "test",
+      "queries": 20,
+      "answerable_queries": 18,
+      "unanswerable_queries": 2,
+      "errors": 0,
+      "recall5": 0.7592592592592592,
+      "mrr10": 0.8333333333333334,
+      "hit5": 0.8333333333333334,
+      "recall5_ci95": [
+        0.5,
+        1.0
+      ],
+      "mrr10_ci95": [
+        0.6111111111111112,
+        1.0
+      ],
+      "candidate_counts": [
+        5
+      ]
+    },
+    {
+      "configuration": "hybrid_rrf",
+      "split": "all",
+      "queries": 100,
+      "answerable_queries": 90,
+      "unanswerable_queries": 10,
+      "errors": 0,
+      "recall5": 0.9611111111111111,
+      "mrr10": 0.8661111111111109,
+      "hit5": 1.0,
+      "recall5_ci95": [
+        0.9332870370370369,
+        0.9870833333333334
+      ],
+      "mrr10_ci95": [
+        0.8062638888888889,
+        0.9259259259259258
+      ],
+      "candidate_counts": [
+        18
+      ]
+    },
+    {
+      "configuration": "hybrid_rrf",
+      "split": "dev",
+      "queries": 80,
+      "answerable_queries": 72,
+      "unanswerable_queries": 8,
+      "errors": 0,
+      "recall5": 0.960648148148148,
+      "mrr10": 0.858101851851852,
+      "hit5": 1.0,
+      "recall5_ci95": [
+        0.9282407407407407,
+        0.9884259259259258
+      ],
+      "mrr10_ci95": [
+        0.7824016203703704,
+        0.9222395833333333
+      ],
+      "candidate_counts": [
+        18
+      ]
+    },
+    {
+      "configuration": "hybrid_rrf",
+      "split": "test",
+      "queries": 20,
+      "answerable_queries": 18,
+      "unanswerable_queries": 2,
+      "errors": 0,
+      "recall5": 0.9629629629629629,
+      "mrr10": 0.898148148148148,
+      "hit5": 1.0,
+      "recall5_ci95": [
+        0.8888888888888888,
+        1.0
+      ],
+      "mrr10_ci95": [
+        0.7962962962962963,
+        1.0
+      ],
+      "candidate_counts": [
+        18
+      ]
+    },
+    {
+      "configuration": "hybrid_rerank_50",
+      "split": "all",
+      "queries": 100,
+      "answerable_queries": 90,
+      "unanswerable_queries": 10,
+      "errors": 0,
+      "recall5": 0.9962962962962962,
+      "mrr10": 0.9814814814814816,
+      "hit5": 1.0,
+      "recall5_ci95": [
+        0.9888888888888889,
+        1.0
+      ],
+      "mrr10_ci95": [
+        0.9592592592592593,
+        1.0
+      ],
+      "candidate_counts": [
+        18
+      ]
+    },
+    {
+      "configuration": "hybrid_rerank_50",
+      "split": "dev",
+      "queries": 80,
+      "answerable_queries": 72,
+      "unanswerable_queries": 8,
+      "errors": 0,
+      "recall5": 0.9953703703703702,
+      "mrr10": 0.9837962962962963,
+      "hit5": 1.0,
+      "recall5_ci95": [
+        0.9861111111111112,
+        1.0
+      ],
+      "mrr10_ci95": [
+        0.9605902777777776,
+        1.0
+      ],
+      "candidate_counts": [
+        18
+      ]
+    },
+    {
+      "configuration": "hybrid_rerank_50",
+      "split": "test",
+      "queries": 20,
+      "answerable_queries": 18,
+      "unanswerable_queries": 2,
+      "errors": 0,
+      "recall5": 1.0,
+      "mrr10": 0.9722222222222222,
+      "hit5": 1.0,
+      "recall5_ci95": [
+        1.0,
+        1.0
+      ],
+      "mrr10_ci95": [
+        0.9166666666666666,
+        1.0
+      ],
+      "candidate_counts": [
+        18
+      ]
+    },
+    {
+      "configuration": "hybrid_rerank_50_dict",
+      "split": "all",
+      "queries": 100,
+      "answerable_queries": 90,
+      "unanswerable_queries": 10,
+      "errors": 0,
+      "recall5": 0.9962962962962962,
+      "mrr10": 0.9814814814814816,
+      "hit5": 1.0,
+      "recall5_ci95": [
+        0.9888888888888889,
+        1.0
+      ],
+      "mrr10_ci95": [
+        0.9574074074074075,
+        1.0
+      ],
+      "candidate_counts": [
+        18
+      ]
+    },
+    {
+      "configuration": "hybrid_rerank_50_dict",
+      "split": "dev",
+      "queries": 80,
+      "answerable_queries": 72,
+      "unanswerable_queries": 8,
+      "errors": 0,
+      "recall5": 0.9953703703703702,
+      "mrr10": 0.9837962962962963,
+      "hit5": 1.0,
+      "recall5_ci95": [
+        0.9861111111111112,
+        1.0
+      ],
+      "mrr10_ci95": [
+        0.9583333333333334,
+        1.0
+      ],
+      "candidate_counts": [
+        18
+      ]
+    },
+    {
+      "configuration": "hybrid_rerank_50_dict",
+      "split": "test",
+      "queries": 20,
+      "answerable_queries": 18,
+      "unanswerable_queries": 2,
+      "errors": 0,
+      "recall5": 1.0,
+      "mrr10": 0.9722222222222222,
+      "hit5": 1.0,
+      "recall5_ci95": [
+        1.0,
+        1.0
+      ],
+      "mrr10_ci95": [
+        0.9166666666666666,
+        1.0
+      ],
+      "candidate_counts": [
+        18
+      ]
+    },
+    {
+      "configuration": "hybrid_rerank_50_rewrite",
+      "split": "all",
+      "queries": 100,
+      "answerable_queries": 90,
+      "unanswerable_queries": 10,
+      "errors": 0,
+      "recall5": 0.9962962962962962,
+      "mrr10": 0.9833333333333333,
+      "hit5": 1.0,
+      "recall5_ci95": [
+        0.9888888888888889,
+        1.0
+      ],
+      "mrr10_ci95": [
+        0.9611111111111111,
+        1.0
+      ],
+      "candidate_counts": [
+        18
+      ]
+    },
+    {
+      "configuration": "hybrid_rerank_50_rewrite",
+      "split": "dev",
+      "queries": 80,
+      "answerable_queries": 72,
+      "unanswerable_queries": 8,
+      "errors": 0,
+      "recall5": 0.9953703703703702,
+      "mrr10": 0.9791666666666666,
+      "hit5": 1.0,
+      "recall5_ci95": [
+        0.9861111111111112,
+        1.0
+      ],
+      "mrr10_ci95": [
+        0.9513888888888888,
+        1.0
+      ],
+      "candidate_counts": [
+        18
+      ]
+    },
+    {
+      "configuration": "hybrid_rerank_50_rewrite",
+      "split": "test",
+      "queries": 20,
+      "answerable_queries": 18,
+      "unanswerable_queries": 2,
+      "errors": 0,
+      "recall5": 1.0,
+      "mrr10": 1.0,
+      "hit5": 1.0,
+      "recall5_ci95": [
+        1.0,
+        1.0
+      ],
+      "mrr10_ci95": [
+        1.0,
+        1.0
+      ],
+      "candidate_counts": [
+        18
+      ]
+    },
+    {
+      "configuration": "hybrid_rerank_50_dict_rewrite",
+      "split": "all",
+      "queries": 100,
+      "answerable_queries": 90,
+      "unanswerable_queries": 10,
+      "errors": 0,
+      "recall5": 0.9962962962962962,
+      "mrr10": 0.9888888888888889,
+      "hit5": 1.0,
+      "recall5_ci95": [
+        0.9888888888888889,
+        1.0
+      ],
+      "mrr10_ci95": [
+        0.9722222222222222,
+        1.0
+      ],
+      "candidate_counts": [
+        18
+      ]
+    },
+    {
+      "configuration": "hybrid_rerank_50_dict_rewrite",
+      "split": "dev",
+      "queries": 80,
+      "answerable_queries": 72,
+      "unanswerable_queries": 8,
+      "errors": 0,
+      "recall5": 0.9953703703703702,
+      "mrr10": 0.9861111111111112,
+      "hit5": 1.0,
+      "recall5_ci95": [
+        0.9861111111111112,
+        1.0
+      ],
+      "mrr10_ci95": [
+        0.9652777777777778,
+        1.0
+      ],
+      "candidate_counts": [
+        18
+      ]
+    },
+    {
+      "configuration": "hybrid_rerank_50_dict_rewrite",
+      "split": "test",
+      "queries": 20,
+      "answerable_queries": 18,
+      "unanswerable_queries": 2,
+      "errors": 0,
+      "recall5": 1.0,
+      "mrr10": 1.0,
+      "hit5": 1.0,
+      "recall5_ci95": [
+        1.0,
+        1.0
+      ],
+      "mrr10_ci95": [
+        1.0,
+        1.0
+      ],
+      "candidate_counts": [
+        18
+      ]
+    },
+    {
+      "configuration": "hybrid_rerank_20_dict_rewrite",
+      "split": "all",
+      "queries": 100,
+      "answerable_queries": 90,
+      "unanswerable_queries": 10,
+      "errors": 0,
+      "recall5": 0.9962962962962962,
+      "mrr10": 0.9888888888888889,
+      "hit5": 1.0,
+      "recall5_ci95": [
+        0.9888888888888889,
+        1.0
+      ],
+      "mrr10_ci95": [
+        0.9722222222222222,
+        1.0
+      ],
+      "candidate_counts": [
+        18
+      ]
+    },
+    {
+      "configuration": "hybrid_rerank_20_dict_rewrite",
+      "split": "dev",
+      "queries": 80,
+      "answerable_queries": 72,
+      "unanswerable_queries": 8,
+      "errors": 0,
+      "recall5": 0.9953703703703702,
+      "mrr10": 0.9861111111111112,
+      "hit5": 1.0,
+      "recall5_ci95": [
+        0.9861111111111112,
+        1.0
+      ],
+      "mrr10_ci95": [
+        0.9652777777777778,
+        1.0
+      ],
+      "candidate_counts": [
+        18
+      ]
+    },
+    {
+      "configuration": "hybrid_rerank_20_dict_rewrite",
+      "split": "test",
+      "queries": 20,
+      "answerable_queries": 18,
+      "unanswerable_queries": 2,
+      "errors": 0,
+      "recall5": 1.0,
+      "mrr10": 1.0,
+      "hit5": 1.0,
+      "recall5_ci95": [
+        1.0,
+        1.0
+      ],
+      "mrr10_ci95": [
+        1.0,
+        1.0
+      ],
+      "candidate_counts": [
+        18
+      ]
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "label_status": "PROVISIONAL_NOT_HUMAN_VERIFIED",
+  "human_reviewed_queries": 0,
+  "evaluated_queries": 100,
+  "dataset_sha256": "1016ee7d83e50570796fccf2bb7d101dc8d10ffeaed19fef287dc41a9befdb90",
+  "manifest": {
+    "schema_version": 1,
+    "embedding_model": "text-embedding-v4",
+    "embedding_dimensions": 1024,
+    "chunk_settings": {
+      "chunk_size": 512,
+      "chunk_overlap": 128,
+      "separators": [
+        "\n\n",
+        "\n",
+        "。",
+        "！",
+        "？",
+        "；",
+        " ",
+        ""
+      ]
+    },
+    "document_count": 18,
+    "corpus_sha256": "6028adcb67131e396739a7ca0f2916ad6952b8c2e4e48a5a4ca11742ae311c23",
+    "terms_sha256": "87681aa309caf5c047858ef1160b41f3791279ee5a7dc7e42a9ab332e86d4243",
+    "files": {
+      "refund_policy.pdf": "e28ae11f2dbf2d271362f4a26bcdd19e447ae5b04c1a5b9e1ecb70e18ea7f78c",
+      "shipping_policy.pdf": "cfb4644ecab5e6613d719a9409c9e7312d40074ac7e05fba00ede7556d3302c9"
+    },
+    "queries": 100,
+    "answerable": 90,
+    "annotation_status": "assistant_authored_draft_not_human_verified",
+    "split_strategy": "80 dev / 20 test; disjoint intent groups; 90 answerable + 10 unanswerable"
+  },
+  "collection": "smart_cs_kb_v4_1024_v1",
+  "embedding_model": "text-embedding-v4",
+  "rerank_model": "qwen3-rerank",
+  "rewrite_model": "deepseek-flash",
+  "code_sha256": {
+    "rag\\retrieval.py": "388bf2025b409753d7d3a96017bc7a4e4be27c82fcb2f832dadb6a3b600cdc56",
+    "rag\\providers.py": "3cf159290616d59103f2c15a3a3fffed4e0a29f54b272975ae727ea02cc40ae6",
+    "rag_eval\\engine.py": "f4a074fa4d47734e015355832b429444faeca22ee2c9179934228afafdcadeae",
+    "rag_eval\\metrics.py": "e666f0838fe2555b560201846cab1171f69ccf6b8b37e1e21ae21becbb4e8381",
+    "agents\\knowledge_rag.py": "847c71ed67857ff511c79b47dab28b322dbfcff766746b9c27b43f3d6df71ceb"
+  },
+  "metric_definition": "Macro document Recall@5; first relevant rank MRR@10; Hit@5 separately. Empty qrels excluded, not scored as zero.",
+  "unanswerable_scope": "10条无答案样本不参与Recall/MRR；本实验不验证生成答案或拒答准确率",
+  "candidate_ablation_feasible": false,
+  "request_budget": {
+    "limit": 1200,
+    "attempted_calls": 885,
+    "by_provider": {
+      "dashscope_embedding": 264,
+      "deepseek_current_rerank": 100,
+      "deepseek_rewrite": 148,
+      "dashscope_rerank": 373
+    }
+  },
+  "warmup_excluded": 2,
+  "scope": "词典+改写+Embedding+Milvus+BM25+RRF+Rerank；不含答案生成、意图路由与合规",
+  "application_result_cache": "disabled",
+  "concurrency": 1,
+  "requested_candidates": [
+    50,
+    20
+  ],
+  "effective_candidates": [
+    18
+  ],
+  "top50_vs_top20_comparison_valid": false,
+  "summaries": {
+    "hybrid_rerank_50_dict_rewrite": {
+      "attempts": 30,
+      "successes": 30,
+      "failures": 0,
+      "p50_ms": 1480.4997999453917,
+      "p95_ms": 3041.1459348746557,
+      "mean_ms": 1814.8211233473073,
+      "actual_candidates": [
+        18
+      ],
+      "stage_p95_ms": {
+        "bm25_ms": 0.5013249930925665,
+        "embedding_ms": 759.9198400508612,
+        "fusion_ms": 0.06577498279511927,
+        "milvus_ms": 8.62319490406662,
+        "rerank_ms": 1027.479824994225,
+        "rewrite_ms": 1522.7862301049747
+      }
+    }
+  }
+}

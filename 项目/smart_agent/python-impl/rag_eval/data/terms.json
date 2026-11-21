@@ -1,0 +1,17 @@
+{
+  "version": "policy-terms-v1",
+  "source": "退款和配送政策的领域词语；不包含问题答案或测试集标签",
+  "entries": [
+    {"canonical": "七天无理由", "aliases": ["七日无理由", "7天无理由"]},
+    {"canonical": "仅退款", "aliases": ["不退货退款", "不用寄回退钱"]},
+    {"canonical": "退货退款", "aliases": ["寄回退钱", "退回商品退款"]},
+    {"canonical": "退款", "aliases": ["退钱", "退回货款"]},
+    {"canonical": "质量问题", "aliases": ["质量毛病", "产品故障", "品质问题"]},
+    {"canonical": "物流轨迹", "aliases": ["快递记录", "物流进度", "物流记录"]},
+    {"canonical": "未发货", "aliases": ["没发货", "还没出库"]},
+    {"canonical": "工单", "aliases": ["售后单", "售后申请单"]},
+    {"canonical": "原支付路径", "aliases": ["原路返还", "原路退回", "原路退钱"]},
+    {"canonical": "错发漏发", "aliases": ["发错漏发", "错发和漏发"]},
+    {"canonical": "自营", "aliases": ["平台自己卖的"]}
+  ]
+}

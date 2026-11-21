@@ -1,0 +1,28 @@
+RAG检索预评测结果
+状态：PROVISIONAL_NOT_HUMAN_VERIFIED
+查询总数：100；人工复核：0。
+90条可回答样本参与Recall/MRR，10条无答案样本单独保留；未评估生成答案正确率或拒答率。
+以下全量结果是描述性预评测；开发集/测试集按意图组隔离，细分结果与区间在quality report.json。
+Recall@5是相关块覆盖率，MRR@10是首个相关块的倒数排名均值，Hit@5是至少命中一个块。
+
+bm25: Recall@5=94.4444%, MRR@10=0.8029, Hit@5=98.8889%
+vector: Recall@5=92.4074%, MRR@10=0.7728, Hit@5=95.5556%
+current_online: Recall@5=74.8148%, MRR@10=0.8037, Hit@5=84.4444%
+hybrid_rrf: Recall@5=96.1111%, MRR@10=0.8661, Hit@5=100.0000%
+hybrid_rerank_50: Recall@5=99.6296%, MRR@10=0.9815, Hit@5=100.0000%
+hybrid_rerank_50_dict: Recall@5=99.6296%, MRR@10=0.9815, Hit@5=100.0000%
+hybrid_rerank_50_rewrite: Recall@5=99.6296%, MRR@10=0.9833, Hit@5=100.0000%
+hybrid_rerank_50_dict_rewrite: Recall@5=99.6296%, MRR@10=0.9889, Hit@5=100.0000%
+hybrid_rerank_20_dict_rewrite: Recall@5=99.6296%, MRR@10=0.9889, Hit@5=100.0000%
+
+当前线上策略召回5条后输出3条；受控消融其他方法输出10条，不能把全部差额归因于一个因素。
+知识库只有18块：请求Top50和Top20都被上限裁剪。
+Top50与Top20有效对比：False
+延迟范围：词典+改写+Embedding+Milvus+BM25+RRF+Rerank；不含答案生成、意图路由与合规
+延迟实验不读写应用结果缓存；排除预热，串行执行。供应商内部缓存不可控。
+hybrid_rerank_50_dict_rewrite: 30/30成功, actual=[18], P95=3.041s, Rerank P95=1.027s
+
+人工复核：编辑annotation_review.csv的相关块、reviewed和reviewer；不要按检索是否命中反向修改标签。
+python -m rag_eval review-import --csv evaluation_artifacts/annotation_review.csv
+python -m rag_eval run --dataset evaluation_artifacts/queries.reviewed.jsonl
+未复核样本会阻止正式模式运行。草案结果不代表100条人工标注或真实业务准确率。

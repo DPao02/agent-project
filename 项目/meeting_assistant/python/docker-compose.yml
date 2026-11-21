@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  meeting-assistant:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    env_file:
+      - ../.env
+    environment:
+      - SERVER_HOST=0.0.0.0
+      - SERVER_PORT=8000
+      # 复用Windows主机已有的数据库，不启动另一套PostgreSQL/Redis。
+      - MYSQL_HOST=host.docker.internal
+      - MILVUS_URI=http://host.docker.internal:19530
+      - MEETING_DATA_DIR=/app/data
+    volumes:
+      - ./src:/app/src
+      - ../data:/app/data
+    restart: unless-stopped
+
